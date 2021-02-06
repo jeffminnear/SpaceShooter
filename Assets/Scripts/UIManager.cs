@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     private float _textFlashOnDelay = 0.3f;
     private float _textFlashBetweenDelay = 0.2f;
     private int _currentScore = 0;
+    private int _currentAmmo = 15;
     
     public static Color GreenText = new Color(0.04138483f, 0.8773585f, 0.114081f, 1f);
     public static Color YellowText = new Color(0.8080425f, 0.8784314f, 0.04313725f, 1f);
@@ -68,9 +69,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateAmmo(int ammo)
+    public void UpdateAmmo(int newAmmo)
     {
-        _ammoText.text = "Ammo: " + ammo;
+        if (_ammoText.flashable)
+        {
+            if (newAmmo > _currentAmmo)
+            {
+                StartCoroutine(FlashText(_ammoText, GreenText, 1));
+            }
+        }
+        _currentAmmo = newAmmo;
+        _ammoText.text = "Ammo: " + _currentAmmo;
     }
 
     public void ShowOutOfAmmo()
