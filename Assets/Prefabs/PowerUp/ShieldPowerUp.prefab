@@ -99,8 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 4
   _powerUpType: 2
-  _powerUpPickedUpAudio: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494,
-    type: 3}
+  _rarity: 46
 --- !u!50 &24353771701311105
 Rigidbody2D:
   serializedVersion: 4
