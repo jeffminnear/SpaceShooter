@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _baseSpeed = 5.5f;
     private float _currentSpeed;
+    [SerializeField]
+    private float _speedBoost = 5f;
     private float _minYPosition = -3.5f;
     private float _maxYPosition = 5.5f;
     private float _minXPosition = -11.5f;
@@ -98,13 +100,19 @@ public class Player : MonoBehaviour
         return (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 2"));
     }
 
+    bool isBoostPressed()
+    {
+        return (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("Boost") > 0);
+    }
+
     void Move()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        float boost = isBoostPressed() ? _speedBoost : 0f;
 
-        transform.Translate(direction * _currentSpeed * Time.deltaTime);
+        transform.Translate(direction * (_currentSpeed + boost) * Time.deltaTime);
 
         ConstrainPosition();
     }
@@ -197,7 +205,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(ResetWeapon());
                 break;
             case PowerUp.PowerUpType.Speed:
-                _currentSpeed = _baseSpeed * 2;
+                _currentSpeed = _baseSpeed * 1.5f;
                 StartCoroutine(ResetSpeed());
                 break;
             case PowerUp.PowerUpType.Shield:
