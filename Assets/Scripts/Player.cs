@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     private int _currentAmmo;
     [SerializeField]
     private int _maxAmmo = 15;
+    private int _ammoPowerUpAmount = 15;
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
@@ -260,6 +261,10 @@ public class Player : MonoBehaviour
                     SetShieldColorByStrength(_shieldStrength);
                     _playerShield.SetActive(true);
                 }
+                break;
+            case PowerUp.PowerUpType.Ammo:
+                _currentAmmo += _ammoPowerUpAmount;
+                _uiManager.UpdateAmmo(_currentAmmo);
                 break;
             default:
                 break;

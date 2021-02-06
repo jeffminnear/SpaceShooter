@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3252740721241155880}
   - component: {fileID: 3252740721241155879}
-  - component: {fileID: 3252740721241155878}
-  - component: {fileID: 3252740721241155877}
   - component: {fileID: 3252740721241155876}
+  - component: {fileID: 3252740721241155877}
+  - component: {fileID: 3252740721241155878}
   - component: {fileID: 3252740721241155875}
   m_Layer: 0
   m_Name: SpeedPowerUp
@@ -85,22 +85,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3252740721241155878
-CircleCollider2D:
+--- !u!114 &3252740721241155876
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3252740721241155874}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.56
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d1e33ef86c2ff649ba573e929b28208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 4
+  _powerUpType: 1
+  _rarity: 57
 --- !u!50 &3252740721241155877
 Rigidbody2D:
   serializedVersion: 4
@@ -122,22 +121,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3252740721241155876
-MonoBehaviour:
+--- !u!58 &3252740721241155878
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3252740721241155874}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d1e33ef86c2ff649ba573e929b28208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 4
-  _powerUpType: 1
-  _powerUpPickedUpAudio: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494,
-    type: 3}
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.56
 --- !u!95 &3252740721241155875
 Animator:
   serializedVersion: 3

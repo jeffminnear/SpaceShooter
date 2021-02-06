@@ -70,7 +70,24 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnPowerUp()
     {
-        Instantiate(_powerUps[Random.Range(0, _powerUps.Length)], GetSpawnPoint(), Quaternion.identity);
+        int index = 0;
+        int check = Random.Range(1, 101);
+
+        if (check > 33 && check <= 55)
+        {
+            index = 1;
+        }
+        else if (check > 55 && check <= 80)
+        {
+            index = 2;
+        }
+        else if (check > 80)
+        {
+            index = 3;
+        }
+
+        GameObject powerUP = _powerUps[Mathf.Clamp(index, 0, _powerUps.Length - 1)];
+        Instantiate(powerUP, GetSpawnPoint(), Quaternion.identity);
     }
 
     Vector3 GetSpawnPoint()

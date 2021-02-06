@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public enum PowerUpType {TripleShot, Speed, Shield};
+    public enum PowerUpType {
+        TripleShot,
+        Speed,
+        Shield,
+        Ammo
+    }
 
     [SerializeField]
     private float _speed = 4f;
