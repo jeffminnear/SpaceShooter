@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private GameObject _tripleShot;
     [SerializeField]
     private GameObject _playerShield;
+    private SpriteRenderer _shieldRenderer;
     [SerializeField]
     private GameObject _leftWingDamage;
     [SerializeField]
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
         _currentSpeed = _baseSpeed;
         _shieldStrength = _startsWithShield ? _maxShieldStrength : 0;
         _playerShield.SetActive(_startsWithShield);
+        _shieldRenderer = _playerShield.GetComponent<SpriteRenderer>();
         SetShieldColorByStrength(_maxShieldStrength);
         _leftWingDamage.SetActive(false);
         _rightWingDamage.SetActive(false);
@@ -176,7 +178,7 @@ public class Player : MonoBehaviour
 
     void SetShieldColorByStrength(int strength)
     {
-        _playerShield.GetComponent<SpriteRenderer>().color = _shieldColors[Mathf.Clamp(strength - 1, 0, _shieldColors.Length - 1)];
+        _shieldRenderer.color = _shieldColors[Mathf.Clamp(strength - 1, 0, _shieldColors.Length - 1)];
     }
 
     void DamageShield()
