@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private GameObject _tripleShot;
     [SerializeField]
     private GameObject _playerShield;
+    private SpriteRenderer _shieldRenderer;
     [SerializeField]
     private GameObject _leftWingDamage;
     [SerializeField]
@@ -39,7 +40,10 @@ public class Player : MonoBehaviour
     private float _powerUpDuration = 5f;
     [SerializeField]
     private bool _startsWithShield = false;
-    private bool _hasShield = false;
+    private int _shieldStrength;
+    private int _maxShieldStrength = 3;
+    [SerializeField]
+    private Color[] _shieldColors;
     [SerializeField]
     private int _score = 0;
     private UIManager _uiManager;
@@ -69,8 +73,10 @@ public class Player : MonoBehaviour
     {
         _currentWeapon = _laser;
         _currentSpeed = _baseSpeed;
-        _hasShield = _startsWithShield;
+        _shieldStrength = _startsWithShield ? _maxShieldStrength : 0;
         _playerShield.SetActive(_startsWithShield);
+        _shieldRenderer = _playerShield.GetComponent<SpriteRenderer>();
+        SetShieldColorByStrength(_maxShieldStrength);
         _leftWingDamage.SetActive(false);
         _rightWingDamage.SetActive(false);
         _thruster.SetActive(true);
@@ -145,10 +151,9 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        if (_hasShield)
+        if (_shieldStrength > 0)
         {
-            _hasShield = false;
-            _playerShield.SetActive(false);
+            DamageShield();
             return;
         }
 
@@ -168,6 +173,24 @@ public class Player : MonoBehaviour
         if (_lives <= 0)
         {
             Death();
+        }
+    }
+
+    void SetShieldColorByStrength(int strength)
+    {
+        _shieldRenderer.color = _shieldColors[Mathf.Clamp(strength - 1, 0, _shieldColors.Length - 1)];
+    }
+
+    void DamageShield()
+    {
+        _shieldStrength--;
+
+        if (_shieldStrength <= 0)
+        {
+            _playerShield.SetActive(false);
+        }
+        else {
+            SetShieldColorByStrength(_shieldStrength);
         }
     }
 
@@ -209,13 +232,14 @@ public class Player : MonoBehaviour
                 StartCoroutine(ResetSpeed());
                 break;
             case PowerUp.PowerUpType.Shield:
-                if (_hasShield)
+                if (_shieldStrength == _maxShieldStrength)
                 {
                     AddToScore(_bonusShieldScore);
                 }
                 else
                 {
-                    _hasShield = true;
+                    _shieldStrength = _maxShieldStrength;
+                    SetShieldColorByStrength(_shieldStrength);
                     _playerShield.SetActive(true);
                 }
                 break;
