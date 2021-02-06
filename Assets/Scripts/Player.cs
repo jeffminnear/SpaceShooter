@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFireTime = -1f;
+    private int _currentAmmo;
+    [SerializeField]
+    private int _maxAmmo = 15;
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
@@ -55,8 +58,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, -2.5f, 0);
-        InitializePlayer();
         InitializeComponents();
+        InitializePlayer();
     }
 
     void Update()
@@ -72,6 +75,8 @@ public class Player : MonoBehaviour
     void InitializePlayer()
     {
         _currentWeapon = _laser;
+        _currentAmmo = _maxAmmo;
+        _uiManager.UpdateAmmo(_currentAmmo);
         _currentSpeed = _baseSpeed;
         _shieldStrength = _startsWithShield ? _maxShieldStrength : 0;
         _playerShield.SetActive(_startsWithShield);
@@ -143,6 +148,19 @@ public class Player : MonoBehaviour
 
     void Fire()
     {
+        if (_currentWeapon == _laser)
+        {
+            if (_currentAmmo <= 0)
+            {
+                _uiManager.ShowOutOfAmmo();
+                return;
+            }
+            else {
+                _currentAmmo--;
+                _uiManager.UpdateAmmo(_currentAmmo);
+            }
+        }
+
         Vector3 weaponOffset = _currentWeapon == _laser ?  new Vector3(0, 1.02f, 0) : Vector3.zero;
         Instantiate(_currentWeapon, transform.position + weaponOffset, Quaternion.identity);
         _canFireTime = Time.time + _fireRate;
