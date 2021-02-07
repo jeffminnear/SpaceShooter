@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private FlashText _scoreText;
+    private Text _scoreText;
+    private bool _canFlashScoreText = true;
     [SerializeField]
-    private FlashText _ammoText;
+    private Text _ammoText;
+    private bool _canFlashAmmoText = true;
     [SerializeField]
     private Text _gameOverText;
     [SerializeField]
@@ -36,23 +38,20 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScore(int newScore)
     {
-        if (_scoreText.flashable)
+        if (_canFlashScoreText && newScore != _currentScore)
         {
             Color color;
             if (newScore > _currentScore)
             {
                 color = GreenText;
             }
-            else if (newScore < _currentScore)
+            else
             {
                 color = RedText;
             }
-            else
-            {
-                color = _scoreText.color;
-            }
 
-            StartCoroutine(FlashText(_scoreText, color, 1));
+            CanFlash handler = CanFlashScore;
+            StartCoroutine(FlashText(_scoreText, handler, color));
         }
         _currentScore = newScore;
         _scoreText.text = "Score: " + _currentScore;
@@ -71,28 +70,38 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAmmo(int newAmmo)
     {
-        if (_ammoText.flashable)
+        if (_canFlashAmmoText && newAmmo > _currentAmmo)
         {
-            if (newAmmo > _currentAmmo)
-            {
-                StartCoroutine(FlashText(_ammoText, GreenText, 1));
-            }
+            CanFlash handler = CanFlashAmmo;
+            StartCoroutine(FlashText(_ammoText, handler, GreenText));
         }
         _currentAmmo = newAmmo;
         _ammoText.text = "Ammo: " + _currentAmmo;
     }
 
+    delegate void CanFlash(bool val);
+    void CanFlashAmmo(bool val)
+    {
+        _canFlashAmmoText = val;
+    }
+
+    void CanFlashScore(bool val)
+    {
+        _canFlashScoreText = val;
+    }
+
     public void ShowOutOfAmmo()
     {
-        if (_ammoText.flashable)
+        if (_canFlashAmmoText)
         {
-            StartCoroutine(FlashText(_ammoText, RedText));
+            CanFlash handler = CanFlashAmmo;
+            StartCoroutine(FlashText(_ammoText, handler, RedText, 3));
         }
     }
 
-    IEnumerator FlashText(FlashText text, Color flashColor, int count = 3)
+    IEnumerator FlashText(Text text, CanFlash canFlash, Color flashColor, int count = 1)
     {
-        text.flashable = false;
+        canFlash(false);
 
         Color originalColor = text.color;
 
@@ -108,7 +117,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(_textFlashBetweenDelay);
         }
 
-        text.flashable = true;
+        canFlash(true);
     }
 
     IEnumerator GameOverFlicker()

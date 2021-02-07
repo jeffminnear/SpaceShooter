@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     private float _canFireTime = -1f;
     private int _currentAmmo;
     [SerializeField]
-    private int _maxAmmo = 15;
+    private int _startingAmmo = 15;
     private int _ammoPowerUpAmount = 15;
     [SerializeField]
     private int _lives = 3;
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
     void InitializePlayer()
     {
         _currentWeapon = _laser;
-        _currentAmmo = _maxAmmo;
+        _currentAmmo = _startingAmmo;
         _uiManager.UpdateAmmo(_currentAmmo);
         _currentSpeed = _baseSpeed;
         _shieldStrength = _startsWithShield ? _maxShieldStrength : 0;
