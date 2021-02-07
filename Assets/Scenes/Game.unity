@@ -636,6 +636,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
+      propertyPath: _lives
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
+        type: 3}
       propertyPath: _maxAmmo
       value: 15
       objectReference: {fileID: 0}
@@ -1355,7 +1360,7 @@ PrefabInstance:
     - target: {fileID: 1010196300592875734, guid: c842a544348f3ab4c95436f0eb8ff2e1,
         type: 3}
       propertyPath: _powerUps.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1010196300592875734, guid: c842a544348f3ab4c95436f0eb8ff2e1,
         type: 3}
@@ -1380,6 +1385,12 @@ PrefabInstance:
       propertyPath: _powerUps.Array.data[3]
       value: 
       objectReference: {fileID: 5693450660440866266, guid: f7e71583be54bf746889b82702d773a3,
+        type: 3}
+    - target: {fileID: 1010196300592875734, guid: c842a544348f3ab4c95436f0eb8ff2e1,
+        type: 3}
+      propertyPath: _powerUps.Array.data[4]
+      value: 
+      objectReference: {fileID: 6191273022488796216, guid: 01d66182cca6a304a8a7c83ea69995e7,
         type: 3}
     - target: {fileID: 1010196300592875735, guid: c842a544348f3ab4c95436f0eb8ff2e1,
         type: 3}

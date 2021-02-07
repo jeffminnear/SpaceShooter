@@ -8,7 +8,8 @@ public class PowerUp : MonoBehaviour
         TripleShot,
         Speed,
         Shield,
-        Ammo
+        Ammo,
+        Life
     }
 
     [SerializeField]

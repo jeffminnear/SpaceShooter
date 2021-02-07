@@ -81,9 +81,13 @@ public class SpawnManager : MonoBehaviour
         {
             index = 2;
         }
-        else if (check > 80)
+        else if (check > 80 && check <= 90)
         {
             index = 3;
+        }
+        else if (check > 90)
+        {
+            index = 4;
         }
 
         GameObject powerUP = _powerUps[Mathf.Clamp(index, 0, _powerUps.Length - 1)];
