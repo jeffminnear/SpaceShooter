@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     private GameObject _explosion;
     [SerializeField]
     private GameObject _thruster;
+    [SerializeField]
+    private GameObject _beam;
+    private bool _hasBeam = false;
+    private bool _beamIsActive = false;
     private int _bonusShieldScore = 100;
     private int _bonusLifeScore = 500;
     [SerializeField]
@@ -68,7 +72,12 @@ public class Player : MonoBehaviour
     {
         Move();
 
-        if (isFirePressed() && Time.time > _canFireTime)
+        if (_hasBeam)
+        {
+            HandleBeam();
+        }
+
+        if (!_hasBeam && isFirePressed() && Time.time > _canFireTime)
         {
             Fire();
         }
@@ -82,6 +91,8 @@ public class Player : MonoBehaviour
         _currentSpeed = _baseSpeed;
         _shieldStrength = _startsWithShield ? _maxShieldStrength : 0;
         _playerShield.SetActive(_startsWithShield);
+        _hasBeam = true;
+        _beam.SetActive(false);
         _shieldRenderer = _playerShield.GetComponent<SpriteRenderer>();
         SetShieldColorByStrength(_maxShieldStrength);
         _leftWingDamage.SetActive(false);
@@ -113,9 +124,14 @@ public class Player : MonoBehaviour
         return (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 2"));
     }
 
-    bool isBoostPressed()
+    bool isBoostHeld()
     {
         return (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("Boost") > 0);
+    }
+
+    bool isFireHeld()
+    {
+        return (Input.GetKey(KeyCode.Space) || Input.GetKey("joystick button 2"));
     }
 
     void Move()
@@ -123,11 +139,31 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        float boost = isBoostPressed() ? _speedBoost : 0f;
+        float boost = isBoostHeld() ? _speedBoost : 0f;
 
         transform.Translate(direction * (_currentSpeed + boost) * Time.deltaTime);
 
         ConstrainPosition();
+    }
+
+    void HandleBeam()
+    {
+        if (isFireHeld())
+        {
+            if (!_beamIsActive)
+            {
+                _beamIsActive = true;
+                _beam.SetActive(true);
+            }
+        }
+        else
+        {
+            if (_beamIsActive)
+            {
+                _beamIsActive = false;
+                _beam.SetActive(false);
+            }
+        }
     }
 
     void ConstrainPosition()
