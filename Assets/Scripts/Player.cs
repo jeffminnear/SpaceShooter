@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _thruster;
     private int _bonusShieldScore = 100;
+    private int _bonusLifeScore = 500;
     [SerializeField]
     private float _baseSpeed = 5.5f;
     private float _currentSpeed;
@@ -265,6 +266,17 @@ public class Player : MonoBehaviour
             case PowerUp.PowerUpType.Ammo:
                 _currentAmmo += _ammoPowerUpAmount;
                 _uiManager.UpdateAmmo(_currentAmmo);
+                break;
+            case PowerUp.PowerUpType.Life:
+                if (_lives >= 3)
+                {
+                    AddToScore(_bonusLifeScore);
+                }
+                else
+                {
+                    _lives++;
+                    _uiManager.UpdateLives(_lives);
+                }
                 break;
             default:
                 break;
