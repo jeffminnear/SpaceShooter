@@ -9,7 +9,8 @@ public class PowerUp : MonoBehaviour
         Speed,
         Shield,
         Ammo,
-        Life
+        Life,
+        Beam
     }
 
     [SerializeField]

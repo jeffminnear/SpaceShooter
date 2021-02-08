@@ -214,7 +214,7 @@ PrefabInstance:
     - target: {fileID: 6490933885944564711, guid: fce26b09acea70f4aac6b808665e7812,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6490933885944564711, guid: fce26b09acea70f4aac6b808665e7812,
         type: 3}
@@ -562,7 +562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1165878995
 GameObject:
@@ -972,7 +972,7 @@ RectTransform:
   - {fileID: 1043949630}
   - {fileID: 716626515}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1250,7 +1250,7 @@ Transform:
   m_LocalScale: {x: 1.0701988, y: 1.092592, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1975643264
 GameObject:
@@ -1360,7 +1360,7 @@ PrefabInstance:
     - target: {fileID: 1010196300592875734, guid: c842a544348f3ab4c95436f0eb8ff2e1,
         type: 3}
       propertyPath: _powerUps.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1010196300592875734, guid: c842a544348f3ab4c95436f0eb8ff2e1,
         type: 3}
@@ -1392,6 +1392,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6191273022488796216, guid: 01d66182cca6a304a8a7c83ea69995e7,
         type: 3}
+    - target: {fileID: 1010196300592875734, guid: c842a544348f3ab4c95436f0eb8ff2e1,
+        type: 3}
+      propertyPath: _powerUps.Array.data[5]
+      value: 
+      objectReference: {fileID: 7993424119610436386, guid: 1fe26ecd6043c06488fbe16e5f71bcd4,
+        type: 3}
     - target: {fileID: 1010196300592875735, guid: c842a544348f3ab4c95436f0eb8ff2e1,
         type: 3}
       propertyPath: m_Name
@@ -1414,7 +1420,7 @@ PrefabInstance:
     - target: {fileID: 4503397300075134467, guid: 205c22d6a5d328340bd458bcf3e58e8a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4503397300075134467, guid: 205c22d6a5d328340bd458bcf3e58e8a,
         type: 3}

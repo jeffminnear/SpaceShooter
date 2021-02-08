@@ -91,8 +91,7 @@ public class Player : MonoBehaviour
         _currentSpeed = _baseSpeed;
         _shieldStrength = _startsWithShield ? _maxShieldStrength : 0;
         _playerShield.SetActive(_startsWithShield);
-        _hasBeam = true;
-        _beam.SetActive(false);
+        _hasBeam = false;
         _shieldRenderer = _playerShield.GetComponent<SpriteRenderer>();
         SetShieldColorByStrength(_maxShieldStrength);
         _leftWingDamage.SetActive(false);
@@ -152,16 +151,14 @@ public class Player : MonoBehaviour
         {
             if (!_beamIsActive)
             {
-                _beamIsActive = true;
-                _beam.SetActive(true);
+                ActivateBeam();
             }
         }
         else
         {
             if (_beamIsActive)
             {
-                _beamIsActive = false;
-                _beam.SetActive(false);
+                DeactivateBeam();
             }
         }
     }
@@ -314,6 +311,10 @@ public class Player : MonoBehaviour
                     _uiManager.UpdateLives(_lives);
                 }
                 break;
+            case PowerUp.PowerUpType.Beam:
+                _hasBeam = true;
+                StartCoroutine(ResetWeapon());
+                break;
             default:
                 break;
         }
@@ -340,6 +341,8 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(_powerUpDuration);
 
         _currentWeapon = _laser;
+        _hasBeam = false;
+        DeactivateBeam();
     }
 
     IEnumerator ResetSpeed()
@@ -347,5 +350,17 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(_powerUpDuration);
 
         _currentSpeed = _baseSpeed;
+    }
+
+    void ActivateBeam()
+    {
+        _beamIsActive = true;
+        _beam.GetComponent<Animator>().SetTrigger("Activate");
+    }
+
+    void DeactivateBeam()
+    {
+        _beamIsActive = false;
+        _beam.GetComponent<Animator>().SetTrigger("Deactivate");
     }
 }

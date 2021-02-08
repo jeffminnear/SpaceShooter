@@ -77,6 +77,15 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             Death();
         }
+        else if (other.transform.tag == "Beam")
+        {
+            if (_player != null)
+            {
+                _player.AddToScore(Mathf.RoundToInt(_pointValue * (_currentSpeed / 2)));
+            }
+            
+            Death();
+        }
     }
 
     private void Death()
