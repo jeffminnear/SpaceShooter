@@ -36,6 +36,10 @@ public class Asteroid : MonoBehaviour
             Destroy(other.gameObject);
             Death();
         }
+        else if (other.transform.tag == "Beam")
+        {
+            Death();
+        }
     }
 
     void Death()

@@ -70,24 +70,28 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnPowerUp()
     {
-        int index = 0;
+        int index = 0; // Ammo
         int check = Random.Range(1, 101);
 
         if (check > 33 && check <= 55)
         {
-            index = 1;
+            index = 1; // Speed
         }
-        else if (check > 55 && check <= 80)
+        else if (check > 55 && check <= 75)
         {
-            index = 2;
+            index = 2; // Shield
         }
-        else if (check > 80 && check <= 90)
+        else if (check > 75 && check <= 85)
         {
-            index = 3;
+            index = 3; // Triple Shot
         }
-        else if (check > 90)
+        else if (check > 85 && check <= 92)
         {
-            index = 4;
+            index = 4; // Life
+        }
+        else if (check > 92)
+        {
+            index = 5; // Beam
         }
 
         GameObject powerUP = _powerUps[Mathf.Clamp(index, 0, _powerUps.Length - 1)];
