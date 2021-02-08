@@ -619,55 +619,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3457695116731910521, guid: 27cbab2fa83e0a3439d978f9cf67964b,
+    - target: {fileID: 947832373323844487, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4177059432387593683, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: m_RootOrder
+      propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4867996958516114686, guid: 27cbab2fa83e0a3439d978f9cf67964b,
+    - target: {fileID: 947832373323844487, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_Color.g
+      value: 0.56465983
       objectReference: {fileID: 0}
-    - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
+    - target: {fileID: 947832373323844487, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
-      propertyPath: _lives
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: _maxAmmo
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: _fireRate
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: _speedBoost
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5379191766604833504, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: _startsWithShield
-      value: 0
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5379191766604833505, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5379191766604833505, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5379191766604833506, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
@@ -722,11 +692,6 @@ PrefabInstance:
     - target: {fileID: 5379191766604833506, guid: 27cbab2fa83e0a3439d978f9cf67964b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747804433295389941, guid: 27cbab2fa83e0a3439d978f9cf67964b,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

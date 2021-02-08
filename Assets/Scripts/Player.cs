@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private GameObject _explosion;
     [SerializeField]
     private GameObject _thruster;
+    private bool _boostIsActive = false;
     [SerializeField]
     private GameObject _beam;
     private bool _hasBeam = false;
@@ -70,6 +71,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        HandleBoost();
+
         Move();
 
         if (_hasBeam)
@@ -138,11 +141,29 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        float boost = isBoostHeld() ? _speedBoost : 0f;
+        float boost = _boostIsActive ? _speedBoost : 0f;
 
         transform.Translate(direction * (_currentSpeed + boost) * Time.deltaTime);
 
         ConstrainPosition();
+    }
+
+    void HandleBoost()
+    {
+        if (isBoostHeld())
+        {
+            if (!_boostIsActive)
+            {
+                ActivateBoost();
+            }
+        }
+        else
+        {
+            if (_boostIsActive)
+            {
+                DeactivateBoost();
+            }
+        }
     }
 
     void HandleBeam()
@@ -362,5 +383,18 @@ public class Player : MonoBehaviour
     {
         _beamIsActive = false;
         _beam.GetComponent<Animator>().SetTrigger("Deactivate");
+    }
+
+    void ActivateBoost()
+    {
+        _boostIsActive = true;
+        _thruster.GetComponent<Animator>().SetTrigger("BoostActivate");
+    
+    }
+
+    void DeactivateBoost()
+    {
+        _boostIsActive = false;
+        _thruster.GetComponent<Animator>().SetTrigger("BoostDeactivate");
     }
 }
