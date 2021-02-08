@@ -19,7 +19,13 @@ public class Player : MonoBehaviour
     private GameObject _explosion;
     [SerializeField]
     private GameObject _thruster;
+    private bool _canBoost = true;
     private bool _boostIsActive = false;
+    [SerializeField]
+    private float _engineTemp = 0f;
+    private float _maxEngineTemp = 100f;
+    private float _boostHeatPerSecond = 40f;
+    private float _boostCoolPerSecond = 25f;
     [SerializeField]
     private GameObject _beam;
     private bool _hasBeam = false;
@@ -152,16 +158,51 @@ public class Player : MonoBehaviour
     {
         if (isBoostHeld())
         {
-            if (!_boostIsActive)
+            if (_boostIsActive)
             {
-                ActivateBoost();
+                if (_engineTemp >= _maxEngineTemp)
+                {
+                    // start overheat
+                    _canBoost = false;
+                    DeactivateBoost();
+                }
+                else
+                {
+                    _engineTemp += (_boostHeatPerSecond * Time.deltaTime);
+                }
+            }
+            else
+            {
+                if (_canBoost)
+                {
+                    ActivateBoost();
+                }
+                else
+                {
+                    if (_engineTemp > 0)
+                    {
+                        _engineTemp -= (_boostCoolPerSecond * Time.deltaTime);
+                    }
+                }
             }
         }
-        else
+        else // boost is not held
         {
             if (_boostIsActive)
             {
                 DeactivateBoost();
+            }
+            else
+            {
+                if (_engineTemp > 0)
+                {
+                    _engineTemp -= (_boostCoolPerSecond * Time.deltaTime);
+                }
+                else
+                {
+                    // end overheat
+                    _canBoost = true;
+                }
             }
         }
     }
