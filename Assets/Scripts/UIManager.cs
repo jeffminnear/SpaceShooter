@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private Image _livesImg;
+    [SerializeField]
+    private Slider _engineTempSlider;
     private float _flickerTime = 0.5f;
     private float _textFlashOnDelay = 0.3f;
     private float _textFlashBetweenDelay = 0.2f;
@@ -77,6 +79,11 @@ public class UIManager : MonoBehaviour
         }
         _currentAmmo = newAmmo;
         _ammoText.text = "Ammo: " + _currentAmmo;
+    }
+
+    public void UpdateEngineTemp(float newEngineTemp)
+    {
+        _engineTempSlider.value = newEngineTemp;
     }
 
     delegate void CanFlash(bool val);

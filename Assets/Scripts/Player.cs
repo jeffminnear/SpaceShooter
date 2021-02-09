@@ -106,6 +106,7 @@ public class Player : MonoBehaviour
         _leftWingDamage.SetActive(false);
         _rightWingDamage.SetActive(false);
         _thruster.SetActive(true);
+        _uiManager.UpdateEngineTemp(_engineTemp);
     }
 
     void InitializeComponents()
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    _engineTemp += (_boostHeatPerSecond * Time.deltaTime);
+                    HeatEngine();
                 }
             }
             else
@@ -181,7 +182,7 @@ public class Player : MonoBehaviour
                 {
                     if (_engineTemp > 0)
                     {
-                        _engineTemp -= (_boostCoolPerSecond * Time.deltaTime);
+                        CoolEngine();
                     }
                 }
             }
@@ -196,7 +197,7 @@ public class Player : MonoBehaviour
             {
                 if (_engineTemp > 0)
                 {
-                    _engineTemp -= (_boostCoolPerSecond * Time.deltaTime);
+                    CoolEngine();
                 }
                 else
                 {
@@ -205,6 +206,18 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void HeatEngine()
+    {
+        _engineTemp += (_boostHeatPerSecond * Time.deltaTime);
+        _uiManager.UpdateEngineTemp(_engineTemp);
+    }
+
+    private void CoolEngine()
+    {
+        _engineTemp -= (_boostCoolPerSecond * Time.deltaTime);
+        _uiManager.UpdateEngineTemp(_engineTemp);
     }
 
     void HandleBeam()
