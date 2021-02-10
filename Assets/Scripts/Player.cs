@@ -19,6 +19,13 @@ public class Player : MonoBehaviour
     private GameObject _explosion;
     [SerializeField]
     private GameObject _thruster;
+    private bool _canBoost = true;
+    private bool _boostIsActive = false;
+    [SerializeField]
+    private float _engineTemp = 0f;
+    private float _maxEngineTemp = 100f;
+    private float _boostHeatPerSecond = 40f;
+    private float _boostCoolPerSecond = 25f;
     [SerializeField]
     private GameObject _beam;
     private bool _hasBeam = false;
@@ -70,6 +77,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        HandleBoost();
+
         Move();
 
         if (_hasBeam)
@@ -97,6 +106,7 @@ public class Player : MonoBehaviour
         _leftWingDamage.SetActive(false);
         _rightWingDamage.SetActive(false);
         _thruster.SetActive(true);
+        _uiManager.UpdateEngineTemp(_engineTemp);
     }
 
     void InitializeComponents()
@@ -138,11 +148,78 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        float boost = isBoostHeld() ? _speedBoost : 0f;
+        float boost = _boostIsActive ? _speedBoost : 0f;
 
         transform.Translate(direction * (_currentSpeed + boost) * Time.deltaTime);
 
         ConstrainPosition();
+    }
+
+    void HandleBoost()
+    {
+        if (isBoostHeld())
+        {
+            if (_boostIsActive)
+            {
+                if (_engineTemp >= _maxEngineTemp)
+                {
+                    // start overheat
+                    _canBoost = false;
+                    _uiManager.EngineOverHeat(true);
+                    DeactivateBoost();
+                }
+                else
+                {
+                    HeatEngine();
+                }
+            }
+            else
+            {
+                if (_canBoost)
+                {
+                    ActivateBoost();
+                }
+                else
+                {
+                    if (_engineTemp > 0)
+                    {
+                        CoolEngine();
+                    }
+                }
+            }
+        }
+        else // boost is not held
+        {
+            if (_boostIsActive)
+            {
+                DeactivateBoost();
+            }
+            else
+            {
+                if (_engineTemp > 0)
+                {
+                    CoolEngine();
+                }
+                else
+                {
+                    // end overheat
+                    _canBoost = true;
+                    _uiManager.EngineOverHeat(false);
+                }
+            }
+        }
+    }
+
+    private void HeatEngine()
+    {
+        _engineTemp += (_boostHeatPerSecond * Time.deltaTime);
+        _uiManager.UpdateEngineTemp(_engineTemp);
+    }
+
+    private void CoolEngine()
+    {
+        _engineTemp -= (_boostCoolPerSecond * Time.deltaTime);
+        _uiManager.UpdateEngineTemp(_engineTemp);
     }
 
     void HandleBeam()
@@ -362,5 +439,18 @@ public class Player : MonoBehaviour
     {
         _beamIsActive = false;
         _beam.GetComponent<Animator>().SetTrigger("Deactivate");
+    }
+
+    void ActivateBoost()
+    {
+        _boostIsActive = true;
+        _thruster.GetComponent<Animator>().SetTrigger("BoostActivate");
+    
+    }
+
+    void DeactivateBoost()
+    {
+        _boostIsActive = false;
+        _thruster.GetComponent<Animator>().SetTrigger("BoostDeactivate");
     }
 }
