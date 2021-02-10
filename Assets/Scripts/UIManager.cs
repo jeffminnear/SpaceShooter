@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
     public static Color YellowText = new Color(0.8080425f, 0.8784314f, 0.04313725f, 1f);
     public static Color RedText = new Color(0.8207547f, 0f, 0f, 1f);
     public static Color CoolEngine = new Color(0f, 0.1843137f, 1f, 1f);
+    public static Color WarmEngine = new Color(1f, 0.4558313f, 0f, 1f);
     public static Color HotEngine = new Color(1f, 0.0630439f, 0f, 1f);
 
     void Awake()
@@ -94,7 +95,14 @@ public class UIManager : MonoBehaviour
     public void UpdateEngineTemp(float newEngineTemp)
     {
         _engineTempSlider.value = newEngineTemp;
-        _engineTempSliderFillImage.color = Color.Lerp(CoolEngine, HotEngine, newEngineTemp / 100);
+        if (newEngineTemp <= 50)
+        {
+            _engineTempSliderFillImage.color = Color.Lerp(CoolEngine, WarmEngine, newEngineTemp / 50);
+        }
+        else
+        {
+            _engineTempSliderFillImage.color = Color.Lerp(WarmEngine, HotEngine, (newEngineTemp - 50) / 50);
+        }
     }
 
     delegate void CanFlash(bool val);
