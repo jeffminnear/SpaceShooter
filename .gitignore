@@ -61,3 +61,4 @@ crashlytics-build.properties
 
 # Project Specific
 /Assets/GameDevHQ/FileBase/Plugin
+/Assets/GameDevHQ/FileBase//Plugin.meta
