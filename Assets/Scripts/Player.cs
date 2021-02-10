@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     private GameManager _gameManager;
     private AudioManager _audio;
     private BoxCollider2D _collider;
+    private Animator _cameraAnimator;
     
 
     void Start()
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour
         _uiManager.UpdateLives(_lives);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _audio = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        _cameraAnimator = GameObject.Find("Main Camera").GetComponent<Animator>();
     }
 
     void VerifyComponent(object component)
@@ -281,6 +283,8 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        _cameraAnimator.SetTrigger("Shake");
+        
         if (_shieldStrength > 0)
         {
             DamageShield();
