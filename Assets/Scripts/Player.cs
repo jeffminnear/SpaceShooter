@@ -165,6 +165,7 @@ public class Player : MonoBehaviour
                 {
                     // start overheat
                     _canBoost = false;
+                    _uiManager.EngineOverHeat(true);
                     DeactivateBoost();
                 }
                 else
@@ -203,6 +204,7 @@ public class Player : MonoBehaviour
                 {
                     // end overheat
                     _canBoost = true;
+                    _uiManager.EngineOverHeat(false);
                 }
             }
         }

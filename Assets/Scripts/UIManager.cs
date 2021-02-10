@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     private Text _ammoText;
     private bool _canFlashAmmoText = true;
     [SerializeField]
+    private Text _engineOverHeatText;
+    private bool _overHeat = false;
+    private bool _canFlashEngineOverHeatText = true;
+    [SerializeField]
     private Text _gameOverText;
     [SerializeField]
     private Text _restartText;
@@ -46,6 +50,7 @@ public class UIManager : MonoBehaviour
     {
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+        _engineOverHeatText.gameObject.SetActive(false);
         UpdateScore(0);
     }
 
@@ -95,6 +100,12 @@ public class UIManager : MonoBehaviour
     public void UpdateEngineTemp(float newEngineTemp)
     {
         _engineTempSlider.value = newEngineTemp;
+
+        if (_overHeat)
+        {
+            return;
+        }
+
         if (newEngineTemp <= 50)
         {
             _engineTempSliderFillImage.color = Color.Lerp(CoolEngine, WarmEngine, newEngineTemp / 50);
@@ -105,7 +116,25 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void EngineOverHeat(bool overHeat)
+    {
+        _overHeat = overHeat;
+
+        if (_overHeat)
+        {
+            _engineTempSliderFillImage.color = HotEngine;
+            _engineOverHeatText.gameObject.SetActive(true);
+            StartCoroutine(OverHeatRoutine());
+        }
+        else
+        {
+            _engineTempSliderFillImage.color = CoolEngine;
+            _engineOverHeatText.gameObject.SetActive(false);
+        }
+    }
+
     delegate void CanFlash(bool val);
+
     void CanFlashAmmo(bool val)
     {
         _canFlashAmmoText = val;
@@ -116,12 +145,31 @@ public class UIManager : MonoBehaviour
         _canFlashScoreText = val;
     }
 
+    void CanFlashOverHeat(bool val)
+    {
+        _canFlashEngineOverHeatText = val;
+    }
+
     public void ShowOutOfAmmo()
     {
         if (_canFlashAmmoText)
         {
             CanFlash handler = CanFlashAmmo;
             StartCoroutine(FlashText(_ammoText, handler, RedText, 3));
+        }
+    }
+
+    IEnumerator OverHeatRoutine()
+    {
+        while (_overHeat)
+        {
+            if (_canFlashEngineOverHeatText)
+            {
+                CanFlash handler = CanFlashOverHeat;
+                StartCoroutine(FlashText(_engineOverHeatText, handler, RedText));
+            }
+
+            yield return new WaitForSeconds(_textFlashOnDelay + _textFlashBetweenDelay + 0.01f); // total runtime of FlashText plus a small buffer
         }
     }
 
